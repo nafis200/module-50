@@ -15,7 +15,8 @@ const Register = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const accepted = e.target.terms.checked
+    console.log(email, password,accepted);
     setRegisterError('')
     setSuccess('')
 
@@ -26,6 +27,11 @@ const Register = () => {
     else if(! /[A-Z]/.test(password)){
         setRegisterError('Your password should have atleast one uppercase character')
         return
+    }
+
+    else if(!accepted){
+      setRegisterError('please fill up terms and condition')
+      return
     }
 
 
@@ -56,14 +62,24 @@ const Register = () => {
           className="input input-bordered w-full max-w-xs" required
         />
         <br />
+        <div className="relative">
         <input
           type={showPassword ? "text" : "password"}
           name="password"
           id=""
           placeholder="please give password"
-          className="input input-bordered w-full max-w-xs" required
+          className="input input-bordered w-full max-w-xs relative" required
         />
-        <span onClick={()=> setShowPassword(!showPassword)}>Show</span>
+      
+        
+        <span className=" inline-block absolute top-[10px] right-[250px] " onClick={()=> setShowPassword(!showPassword)}>Show</span>
+        
+        </div>
+        <br />
+        <div className="mb-2">
+        <input type="checkbox" name="Accepted" id="terms" />
+        <label htmlFor="terms" className="ml-2" >Accout our <a href="">Terms and condition</a> </label>
+        </div>
         <br />
         <input
           type="submit"
