@@ -1,6 +1,6 @@
 import { useState } from "react";
 import auth from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -17,7 +17,8 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const accepted = e.target.terms.checked
-    console.log(email, password,accepted);
+    const name = e.target.name.value
+    console.log(email, password,accepted,name);
     setRegisterError('')
     setSuccess('')
 
@@ -43,6 +44,18 @@ const Register = () => {
         console.log(user);
         setSuccess('User Created succesfully')
         // ...
+
+        updateProfile(result.user, {
+           displayName: name,
+           photoURL: "https://example.com/jane-q-user/profile.jpg"
+        })
+        .then(()=> console.log('profile updated'))
+        .catch(error=>{
+           console.log(error);
+        })
+
+        sendEmailVerification(result.user)
+        .then(()=> alert('Please check your email and verify your account'))
       })
       .catch((error) => {
         console.log(error);
@@ -55,6 +68,14 @@ const Register = () => {
     <div>
       <h2 className="text-3xl">Please register</h2>
       <form onSubmit={handleRegister} className="space-y-4 mt-5">
+        <input
+          type="text"
+          name="name"
+          id=""
+          placeholder="Your name"
+          className="input input-bordered w-full max-w-xs" required
+        />
+        <br />
         <input
           type="email"
           name="email"
