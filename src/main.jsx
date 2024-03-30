@@ -12,6 +12,7 @@ import Root from './components/root/Root';
 import Home from './components/home/Home';
 import Login from './components/login/Login';
 import Register from './components/reguster/Register';
+import Heroregister from './components/heroRegister/Heroregister';
 
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path:'/register',
         element:<Register></Register>
+      },
+      {
+        path:'/heroregister',
+        element:<Heroregister></Heroregister>
       }
 
     ]
