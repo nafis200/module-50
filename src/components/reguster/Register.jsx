@@ -9,6 +9,8 @@ const Register = () => {
 
     const [success, setSuccess] = useState('')
 
+    const [showPassword,setShowPassword] = useState(false)
+
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -20,6 +22,10 @@ const Register = () => {
     if(password.length < 6){
         setRegisterError('password should be 6 character nafis vai')
         return; 
+    }
+    else if(! /[A-Z]/.test(password)){
+        setRegisterError('Your password should have atleast one uppercase character')
+        return
     }
 
 
@@ -51,12 +57,13 @@ const Register = () => {
         />
         <br />
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           id=""
           placeholder="please give password"
           className="input input-bordered w-full max-w-xs" required
         />
+        <span onClick={()=> setShowPassword(!showPassword)}>Show</span>
         <br />
         <input
           type="submit"
